@@ -36,7 +36,7 @@ The RANSAC plane fitting is used to identify the table by fitting it to a rectan
 The implementation of these filters is in the file of `project_template.py`.
 
 #### 4. Apply Euclidean clustering to create separate clusters for individual items.
-The DBSCAN Algorithm is employed here to separate the point cloud to different objects.
+The DBSCAN Algorithm is employed here to separate the point cloud to different objects. The point cloud data with color informatoin is firstly passed to the XYZRGB_to_XYZ filter to drop the color information. Then the Euclidean Cluster is applied to the white-colored point cloud. After that, the clusters and there labels are published to ros topics for Rviz to visulize the point clouds.
 
 #### 5. Perform object recognition on these objects and assign them labels (markers in RViz).  
 

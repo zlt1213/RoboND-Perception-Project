@@ -24,7 +24,6 @@ from pr2_robot.srv import *
 from rospy_message_converter import message_converter
 import yaml
 
-
 # Helper function to get surface normals
 def get_normals(cloud):
     get_normals_prox = rospy.ServiceProxy('/feature_extractor/get_normals', GetNormals)
@@ -68,7 +67,7 @@ def pcl_callback(pcl_msg):
 	# ====== TODO: Voxel Grid Downsampling ======
 	# create the Voxel Grid filter
 	vox = cloud.make_voxel_grid_filter()
-	# define the leaf size of the vox filter 
+	# define the leaf size of the vox filter
 	LEAF_SIZE = 0.005
 	# set the leaf size of voxel filter
 	vox.set_leaf_size(LEAF_SIZE, LEAF_SIZE, LEAF_SIZE)
@@ -78,8 +77,8 @@ def pcl_callback(pcl_msg):
 
 	# ====== TODO: PassThrough Filter ======
 
-	# pass through filter in z direction 
-	# define the passthrough filter 
+	# pass through filter in z direction
+	# define the passthrough filter
 	passthrough = cloud_vox.make_passthrough_filter()
 	# set the filtering axis
 	filter_axis = 'z'
@@ -91,8 +90,8 @@ def pcl_callback(pcl_msg):
 	# filt
 	cloud_filtered = passthrough.filter()
 
-	# pass through filter in y direction 
-	# define the passthrough filter 
+	# pass through filter in y direction
+	# define the passthrough filter
 	passthrough = cloud_vox.make_passthrough_filter()
 	# set the filtering axis
 	filter_axis = 'y'
@@ -104,8 +103,8 @@ def pcl_callback(pcl_msg):
 	# filt
 	cloud_filtered = passthrough.filter()
 
-	# pass through filter in x direction 
-	# define the passthrough filter 
+	# pass through filter in x direction
+	# define the passthrough filter
 	passthrough = cloud_vox.make_passthrough_filter()
 	# set the filtering axis
 	filter_axis = 'x'
@@ -119,12 +118,12 @@ def pcl_callback(pcl_msg):
 
 
 	# ====== TODO: RANSAC Plane Segmentation ======
-	# create segmentation filter 
+	# create segmentation filter
 	seg = cloud_filtered.make_segmenter()
-	# set the RANSAC model 
+	# set the RANSAC model
 	seg.set_model_type(pcl.SACMODEL_PLANE)
 	seg.set_method_type(pcl.SAC_RANSAC)
-	# set the max distance 
+	# set the max distance
 	max_distance = 0.01
 	seg.set_distance_threshold(max_distance)
 	# create the inliers and coeff
@@ -137,16 +136,16 @@ def pcl_callback(pcl_msg):
 
 
 	# ====== TODO: Euclidean Clustering ======
-	# seperate the color information 
+	# seperate the color information
 	white_cloud = XYZRGB_to_XYZ(cloud_objects)
 	tree = white_cloud.make_kdtree()
 	# create a clustering object
 	ec = white_cloud.make_EuclideanClusterExtraction()
-	# set the parameters of DBSCAN 
+	# set the parameters of DBSCAN
 	ec.set_ClusterTolerance(0.015)
 	ec.set_MinClusterSize(20)
 	ec.set_MaxClusterSize(4000)
-	# search the k-d tree 
+	# search the k-d tree
 	ec.set_SearchMethod(tree)
 	# extract indices for each clusters
 	cluster_indices = ec.Extract()
@@ -154,7 +153,6 @@ def pcl_callback(pcl_msg):
 
 	# ====== TODO: Create Cluster-Mask Point Cloud to visualize each cluster separately ======
 	cluster_color = get_color_list(len(cluster_indices))
-
     color_cluster_point_list = []
 
 	for j, indices in enumerate(cluster_indices):
@@ -188,25 +186,27 @@ def pcl_callback(pcl_msg):
 	detected_objects = []
 
 	for index, pts_list in enumerate(cluster_indices):
-
 		# Grab the points for the cluster
 		pcl_cluster = cloud_objects.extract(pts_list)
+
+        # ==== TODO: convert the cluster from pcl to ROS using helper function ====
 		ros_cluster = pcl_to_ros(pcl_cluster)
 
-		# Compute the associated feature vector
+		# Extract histogram features
 		chists = compute_color_histograms(ros_cluster, using_hsv=True)
 		normals = get_normals(ros_cluster)
 		nhists = compute_normal_histograms(normals)
 		feature = np.concatenate((chists, nhists))
 
-		# Make the prediction
-		# using the trained svm 
+		# Make the prediction, retrieve the label for the result
+		# and add it to detected_objects_labels list
 		prediction = clf.predict(scaler.transform(feature.reshape(1,-1)))
 		label = encoder.inverse_transform(prediction)[0]
+        detected_objects_labels.append(label)
 
 		# Publish a label into RViz
 		label_pos = list(white_cloud[pts_list[0]])
-		label_pos[2] += .3
+		label_pos[2] += .4
 		object_markers_pub.publish(make_label(label,label_pos, index))
 
 		# Add the detected object to the list of detected objects.
@@ -253,7 +253,7 @@ def pr2_mover(object_list):
 		cname = cobj['name']
 
 		# TODO: Create 'place_pose' for the object
-		
+
 
 		# TODO: Assign the arm to be used for pick_place
 
@@ -284,7 +284,7 @@ if __name__ == '__main__':
 
 	# TODO: Create Subscribers
 	pcl_sub = rospy.Subscriber("/pr2/world/points", pc2.PointCloud2, pcl_callback, queue_size = 1)
-	
+
 	# TODO: Create Publishers
 	pcl_objects_pub = rospy.Publisher("/pcl_objects", PointCloud2, queue_size = 1)
 	pcl_table_pub = rospy.Publisher("/pcl_table", PointCloud2, queue_size = 1)
