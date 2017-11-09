@@ -153,7 +153,7 @@ def pcl_callback(pcl_msg):
 
 	# ====== TODO: Create Cluster-Mask Point Cloud to visualize each cluster separately ======
 	cluster_color = get_color_list(len(cluster_indices))
-    color_cluster_point_list = []
+    	color_cluster_point_list = []
 
 	for j, indices in enumerate(cluster_indices):
 		for i, indice in enumerate(indices):
@@ -202,7 +202,7 @@ def pcl_callback(pcl_msg):
 		# and add it to detected_objects_labels list
 		prediction = clf.predict(scaler.transform(feature.reshape(1,-1)))
 		label = encoder.inverse_transform(prediction)[0]
-        detected_objects_labels.append(label)
+        	detected_objects_labels.append(label)
 
 		# Publish a label into RViz
 		label_pos = list(white_cloud[pts_list[0]])
