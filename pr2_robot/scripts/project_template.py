@@ -194,7 +194,7 @@ def pcl_callback(pcl_msg):
 		ros_cluster = pcl_to_ros(pcl_cluster)
 
 		# Extract histogram features
-		chists = compute_color_histograms(ros_cluster, using_hsv=True)
+		chists = compute_color_histograms(ros_cluster, using_hsv=False)
 		normals = get_normals(ros_cluster)
 		nhists = compute_normal_histograms(normals)
 		feature = np.concatenate((chists, nhists))
@@ -215,6 +215,7 @@ def pcl_callback(pcl_msg):
 		do.label = label
 		do.cloud = ros_cluster
 		detected_objects.append(do)
+		print encoder.inverse_transform(prediction)
 
 
 	# Publish the list of detected objects
