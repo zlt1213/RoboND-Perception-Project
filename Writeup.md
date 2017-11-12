@@ -39,6 +39,17 @@ The implementation of these filters is in the file of `project_template.py`.
 The DBSCAN Algorithm is employed here to separate the point cloud to different objects. The point cloud data with color informatoin is firstly passed to the XYZRGB_to_XYZ filter to drop the color information. Then the Euclidean Cluster is applied to the white-colored point cloud. After that, the clusters and there labels are published to ros topics for Rviz to visulize the point clouds.
 
 #### 5. Perform object recognition on these objects and assign them labels (markers in RViz).  
+The results are shown in the figures below.
+ - For world 1  
+ ![Confusion Matrix for List 1](./images/Recg_word_1.png)
+ - For world 2   
+ ![Confusion Matrix for List 1](./images/N_Confusion_1.png)
+ - For world 3  
+ ![Confusion Matrix for List 1](./images/N_Confusion_1.png)
+
+
+
+
 
 #### 6. Calculate the centroid (average in x, y and z) of the set of points belonging to that each object.  
 
