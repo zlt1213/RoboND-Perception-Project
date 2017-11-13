@@ -305,9 +305,9 @@ def pr2_mover(object_list):
         test_scene_num = Int32()
         test_scene_num.data = 3
 
-        place_pose.position.x = dict_dropbox[arm_name.data][0]
-        place_pose.position.y = dict_dropbox[arm_name.data][1]
-        place_pose.position.z = dict_dropbox[arm_name.data][2]
+        place_pose.position.x = dropbox[arm_name.data][0]
+        place_pose.position.y = dropbox[arm_name.data][1]
+        place_pose.position.z = dropbox[arm_name.data][2]
         dict_list.append(make_yaml_dict(test_scene_num, arm_name, object_name, pick_pose, place_pose))
 
         # Wait for 'pick_place_routine' service to come up
