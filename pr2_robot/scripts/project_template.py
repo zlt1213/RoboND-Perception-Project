@@ -255,7 +255,6 @@ def pr2_mover(object_list):
         object_name = String()
         object_name.data = obj['name']
         true_label = object_name.data
-        raw_input()
 
         #set default value of pick_pose
         pick_pose = Pose()
