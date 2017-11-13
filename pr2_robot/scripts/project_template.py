@@ -277,6 +277,9 @@ def pr2_mover(object_list):
         place_pose.orientation.w = 0
 
         for detected_object in object_list:
+            print('==========')
+            print(detected_object.label)
+            print(object_name.data)
             if detected_object.label == object_name.data:
 
                 # TODO: Create 'place_pose' for the object
@@ -287,6 +290,7 @@ def pr2_mover(object_list):
                 pick_pose.position.x = np.asscalar(pick_pose_np[0])
                 pick_pose.position.y = np.asscalar(pick_pose_np[1])
                 pick_pose.position.z = np.asscalar(pick_pose_np[2])
+
                 print("------")
                 print("centroid " + object_name.data + " is :")
                 print(np.mean(points_arr, axis=0)[:3])
