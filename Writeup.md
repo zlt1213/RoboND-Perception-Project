@@ -45,7 +45,7 @@ The results are shown in the figures below.
  - For world 2   
  ![Confusion Matrix for List 1](./images/Recg_word_2.png)
  - For world 3  
- ![Confusion Matrix for List 1](./images/N_Confusion_1.png)
+ ![Confusion Matrix for List 1](./images/Recg_word_2.png)
 
 
 
