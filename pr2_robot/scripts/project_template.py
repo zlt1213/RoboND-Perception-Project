@@ -287,7 +287,9 @@ def pr2_mover(object_list):
                 pick_pose.position.x = np.asscalar(pick_pose_np[0])
                 pick_pose.position.y = np.asscalar(pick_pose_np[1])
                 pick_pose.position.z = np.asscalar(pick_pose_np[2])
-                print(np.mean(points_arr, axis=0))
+                print("------")
+                print("centroid " + object_name.data " is :")
+                print(np.mean(points_arr, axis=0)[:3])
                 break
 
 
