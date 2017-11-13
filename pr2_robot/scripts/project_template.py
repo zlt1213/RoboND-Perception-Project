@@ -277,11 +277,11 @@ def pr2_mover(object_list):
         place_pose.orientation.w = 0
 
         for detected_object in object_list:
-            print('==========')
-            print(detected_object.label)
-            print(object_name.data)
-            if detected_object.label == object_name.data:
 
+            if detected_object.label == object_name.data:
+                print('==========')
+                print(detected_object.label)
+                print(object_name.data)
                 # TODO: Create 'place_pose' for the object
                 points_arr = ros_to_pcl(detected_object.cloud).to_array()
                 centroids.append(np.mean(points_arr, axis=0)[:3])
