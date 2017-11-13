@@ -251,8 +251,6 @@ def pr2_mover(object_list):
 
     # TODO: Loop through the pick list
     for obj in objects_param:
-
-
         # TODO: get the name of the obj
         object_name = String()
         object_name.data = obj['name']
@@ -280,11 +278,10 @@ def pr2_mover(object_list):
         place_pose.orientation.w = 0
 
         for detected_object in object_list:
+            print(detected_object.label)
 
             if detected_object.label == object_name.data:
-
-                print(detected_object.label)
-
+                
                 # TODO: Create 'place_pose' for the object
                 points_arr = ros_to_pcl(detected_object.cloud).to_array()
                 centroids.append(np.mean(points_arr, axis=0)[:3])
@@ -295,7 +292,7 @@ def pr2_mover(object_list):
                 pick_pose.position.z = np.asscalar(pick_pose_np[2])
 
                 print("------")
-                print("centroid " + object_name.data + " is :")
+                print("centroid is :")
                 print(np.mean(points_arr, axis=0)[:3])
                 break
 
