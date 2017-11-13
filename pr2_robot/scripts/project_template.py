@@ -254,8 +254,7 @@ def pr2_mover(object_list):
         # TODO: get the name of the obj
         object_name = String()
         object_name.data = obj['name']
-        print('======')
-        print(object_name.data)
+        true_label = object_name.data
         raw_input()
 
         #set default value of pick_pose
@@ -278,10 +277,9 @@ def pr2_mover(object_list):
         place_pose.orientation.w = 0
 
         for detected_object in object_list:
-            print(detected_object.label)
+            pridicted_label = detected_object.label
+            if pridicted_label == true_label:
 
-            if detected_object.label == object_name.data:
-                
                 # TODO: Create 'place_pose' for the object
                 points_arr = ros_to_pcl(detected_object.cloud).to_array()
                 centroids.append(np.mean(points_arr, axis=0)[:3])
