@@ -45,10 +45,7 @@ The results are shown in the figures below.
  - For world 2   
  ![Confusion Matrix for List 1](./images/Recg_word_2.png)
  - For world 3  
- ![Confusion Matrix for List 1](./images/Recg_word_2.png)
-
-
-
+ ![Confusion Matrix for List 1](./images/Recg_word_3.png)
 
 
 #### 6. Calculate the centroid (average in x, y and z) of the set of points belonging to that each object.  
