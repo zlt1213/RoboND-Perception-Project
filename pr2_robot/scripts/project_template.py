@@ -258,7 +258,7 @@ def pr2_mover(object_list):
         object_name.data = obj['name']
         print('======')
         print(object_name.data)
-        input()
+        raw_input()
 
         #set default value of pick_pose
         pick_pose = Pose()
