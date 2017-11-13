@@ -185,7 +185,7 @@ def pcl_callback(pcl_msg):
 	detected_objects_labels = []
 	detected_objects = []
 
-	
+
 	for index, pts_list in enumerate(cluster_indices):
 		# Grab the points for the cluster
 		pcl_cluster = cloud_objects.extract(pts_list)
@@ -238,7 +238,7 @@ def pr2_mover(object_list):
     dict_list = []
     centroids = [] # to be list of tuples (x, y, z)
 
-    # TODO: Get/Read parameters
+    # TODO: Read Parameters from the ROS Parameter Server
     object_list_param = rospy.get_param('/object_list')
     dropbox_param = rospy.get_param('/dropbox')
 
@@ -254,7 +254,7 @@ def pr2_mover(object_list):
 
     # TODO: Loop through the pick list
     for obj in object_list_param:
-        
+
 
         # TODO: Get the PointCloud for a given object and obtain it's centroid
         object_name = String()
@@ -288,7 +288,7 @@ def pr2_mover(object_list):
                 # TODO: Create 'place_pose' for the object
                 #labels.append(object.label)
                 points_arr = ros_to_pcl(detected_object.cloud).to_array()
-                #centroids.append(np.mean(points_arr, axis=0)[:3])
+                centroids.append(np.mean(points_arr, axis=0)[:3])
                 pick_pose_np = np.mean(points_arr, axis=0)[:3]
                 #pick_pose.position = [np.asscalar(pick_pose_np[0]), np.asscalar(pick_pose_np[1]), np.asscalar(pick_pose_np[2])]
                 pick_pose.position.x = np.asscalar(pick_pose_np[0])

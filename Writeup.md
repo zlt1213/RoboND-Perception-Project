@@ -52,6 +52,7 @@ The results are shown in the figures below.
 
 
 #### 6. Calculate the centroid (average in x, y and z) of the set of points belonging to that each object.  
+The object list is got from the ROS Parameter Server. 
 
 #### 7. Create ROS messages containing the details of each object (name, pick_pose, etc.) and write these messages out to `.yaml` files, one for each of the 3 scenarios (`test1-3.world` in `/pr2_robot/worlds/`).  [See the example `output.yaml` for details on what the output should look like.](https://github.com/udacity/RoboND-Perception-Project/blob/master/pr2_robot/config/output.yaml)  
 
