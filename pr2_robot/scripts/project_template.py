@@ -242,7 +242,7 @@ def pr2_mover(object_list):
     objects_param = rospy.get_param('/object_list')
     dropbox_param = rospy.get_param('/dropbox')
 
-    # TODO: create the dictionary of dropbox ß
+    # TODO: create the dictionary of dropbox
     dropbox = {}
     for p in dropbox_param:
         dropbox[p['name']] = p['position']
