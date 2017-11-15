@@ -29,7 +29,12 @@ The training results are show in the figure below.
 
 #### 3. Use filtering and RANSAC plane fitting to isolate the objects of interest from the rest of the scene.  
 
-The call back function of the point cloud subscriber is  `pcl_callback()`. This function implements the main pipeline of object recognition. After converted to the pcl-format, the point cloud data is passed to the statistical outlier filter firstly. After that, the point cloud is fed to the Voxel Grid Downsampling filter, which down samples the point cloud data based on the resolution of voxel. The PassThrough Filter mainly cut out the the point cloud in a certain volume defined by x\y\z axis.  
+The call back function of the point cloud subscriber is  `pcl_callback()`. This function implements the main pipeline of object recognition.  
+
+The detail format of PCL point could and ROS point cloud is different, so the `ros_to_pcl()` function is used here to converge the data format. 
+
+ After converted to the pcl-format, the point cloud data is passed to the statistical outlier filter firstly. After that, the point cloud is fed to the Voxel Grid Downsampling filter, which down samples the point cloud data based on the resolution of voxel. The PassThrough Filter mainly cut out the the point cloud in a certain volume defined by x\y\z axis.  
+
 
 The RANSAC plane fitting is used to identify the table by fitting it to a rectangular model. The table and objects can be separated afterward.  
 
