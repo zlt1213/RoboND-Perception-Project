@@ -31,10 +31,15 @@ The training results are show in the figure below.
 
 The call back function of the point cloud subscriber is  `pcl_callback()`. This function implements the main pipeline of object recognition.  
 
-The detail format of PCL point could and ROS point cloud is different, so the `ros_to_pcl()` function is used here to converge the data format. 
+The pcl data comes from the ROS topic of `/pr2/world/points`. When the new pcl data generated, the subscriber will call the `pcl_callback()` function automatically.  
 
- After converted to the pcl-format, the point cloud data is passed to the statistical outlier filter firstly. After that, the point cloud is fed to the Voxel Grid Downsampling filter, which down samples the point cloud data based on the resolution of voxel. The PassThrough Filter mainly cut out the the point cloud in a certain volume defined by x\y\z axis.  
+Since the format of PCL point could and ROS point cloud is different, the `ros_to_pcl()` function is used here to converge the data format so that the point cloud data can be processed.  
 
+After converted to the pcl-format, the point cloud data is passed to the statistical outlier filter firstly.
+
+After that, the point cloud is fed to the Voxel Grid Downsampling filter, which down samples the point cloud data based on the resolution of voxel.  
+
+The PassThrough Filter mainly cut out the the point cloud in a certain volume defined by x\y\z axis.   
 
 The RANSAC plane fitting is used to identify the table by fitting it to a rectangular model. The table and objects can be separated afterward.  
 
